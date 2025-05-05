@@ -1,13 +1,14 @@
 import { Suspense, lazy } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import NotFound from '../pages/NotFound';
-import { AppBar } from './AppBar';
-import css from './App.module.css';
+import NotFoundPage from '../pages/NotFoundPage';
 import Header from './Header/Header';
+import css from './App.module.css';
 
-const HomePage = lazy(() => import('../pages/Homepage'));
+const HomePage = lazy(() => import('../pages/HomePage'));
 const MoviesPage = lazy(() => import('../pages/MoviesPage'));
 const MovieDetailsPage = lazy(() => import('../pages/MovieDetailsPage'));
+const Cast = lazy(() => import('../components/MovieCast'));
+const Reviews = lazy(() => import('../components/MovieReviews'));
 
 export const App = () => {
   return (
@@ -17,14 +18,12 @@ export const App = () => {
       <Suspense fallback={<div>Loading page...</div>}>
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/moviespage" element={<MoviesPage />}>
-            <Route path="moviedetailspage" element={<MovieDetailsPage />} />
+          <Route path="/moviespage" element={<MoviesPage />} />
+          <Route path="/moviespage/:movieId" element={<MovieDetailsPage />}>
             <Route path="cast" element={<Cast />} />
             <Route path="reviews" element={<Reviews />} />
           </Route>
-          <Route path="/products" element={<Products />} />
-          <Route path="/products/:id" element={<ProductDetails />} />
-          <Route path="*" element={<NotFound />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </Suspense>
     </div>

@@ -9,18 +9,14 @@ export default function MoviesPage() {
       <Formik
         initialValues={{ movie: '' }}
         onSubmit={(values) => {
-          console.log('Movie submitted:', values.movie);
+          console.log('Submitted movie:', values.movie);
+          // Trigger search API here if needed
         }}
       >
         {() => (
           <Form>
             <label htmlFor="movie">Input your movie:</label>
-            <Field
-              as="textarea"
-              id="movie"
-              name="movie"
-              placeholder="Input your movie"
-            />
+            <Field id="movie" name="movie" placeholder="Input your movie" />
             <button type="submit">Submit</button>
           </Form>
         )}

@@ -1,25 +1,34 @@
-import { Suspense } from 'react';
-import { Link, Outlet } from 'react-router-dom';
+import { Suspense, useState, useEffect } from 'react';
+import { Link, Outlet, useParams } from 'react-router-dom';
+import { getMovieDetails } from '../../api/api'; // Adjust path if needed
 
 export default function MovieDetailsPage() {
+  const { movieId } = useParams();
+  const [movie, setMovie] = useState(null);
+
+  useEffect(() => {
+    if (!movieId) return;
+    getMovieDetails(movieId)
+      .then(setMovie)
+      .catch(err => console.error('Error fetching movie details:', err));
+  }, [movieId]);
+
   return (
     <main>
-          <h1>About Movie</h1>
-          const [movie, setMovie] = useState();
-      <p>
-        input about movie
-      </p>
+      <h1>{movie ? movie.title : 'Loading movie...'}</h1>
+      <p>{movie?.overview}</p>
+
       <ul>
         <li>
-          <Link to="cast">Read about our mission</Link>
+          <Link to="cast">Cast</Link>
         </li>
         <li>
-          <Link to="reviews">Go through the reviews</Link>
+          <Link to="reviews">Reviews</Link>
         </li>
       </ul>
 
       <Suspense fallback={<div>Loading subpage...</div>}>
-        <Outlet />
+        <Outlet context={{ movieId }} />
       </Suspense>
     </main>
   );
