@@ -1,27 +1,27 @@
 import { Suspense, lazy } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import NotFoundPage from '../pages/NotFoundPage';
-import Header from './Header/Header';
-import css from './App.module.css';
+import NotFoundPage from '../pages/NotFoundPage/NotFoundPage';
+import './App.css';  // Normal import for CSS
+import { Header } from './Header/Header';
 
-const HomePage = lazy(() => import('../pages/HomePage'));
-const MoviesPage = lazy(() => import('../pages/MoviesPage'));
-const MovieDetailsPage = lazy(() => import('../pages/MovieDetailsPage'));
-const Cast = lazy(() => import('../components/MovieCast'));
-const Reviews = lazy(() => import('../components/MovieReviews'));
+// Lazy loading for pages and components
+const HomePage = lazy(() => import('../pages/HomePage/HomePage'));
+const MoviesPage = lazy(() => import('../pages/MoviesPage/MoviesPage'));
+const MovieDetailsPage = lazy(() => import('../pages/MovieDetailsPage/MovieDetailsPage'));
+const MovieCast = lazy(() => import('./MovieCast/MovieCast'));
+const MovieReviews = lazy(() => import('./MovieReviews/MovieReviews'));
 
-export const App = () => {
+const App = () => {
   return (
-    <div className={css.container}>
-      <Header />
-
+    <div className="container"> {/* Using a className directly */}
       <Suspense fallback={<div>Loading page...</div>}>
+        <Header/>
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/moviespage" element={<MoviesPage />} />
-          <Route path="/moviespage/:movieId" element={<MovieDetailsPage />}>
-            <Route path="cast" element={<Cast />} />
-            <Route path="reviews" element={<Reviews />} />
+          <Route path="/movies/:movieId" element={<MovieDetailsPage />}>
+            <Route path="cast" element={<MovieCast />} />
+            <Route path="reviews" element={<MovieReviews />} />
           </Route>
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
@@ -29,3 +29,5 @@ export const App = () => {
     </div>
   );
 };
+
+export default App;

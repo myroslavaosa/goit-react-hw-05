@@ -1,0 +1,47 @@
+/* Styling for Movie List */
+.movie-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    /* 3 items per row */
+    gap: 20px;
+    margin-top: 20px;
+}
+
+/* Movie Item styling */
+.movie-item {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease;
+    height: 100%;
+    /* Ensures all movie items have the same height */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.movie-item:hover {
+    transform: scale(1.05);
+}
+
+/* Image styling */
+.movie-poster {
+    width: 100%;
+    /* Ensure images fill the container width */
+    height: 300px;
+    /* Fix the height of the images */
+    object-fit: cover;
+    /* Ensure images maintain aspect ratio */
+    border-bottom: 1px solid #ccc;
+    /* Adds a subtle border below the image */
+}
+
+/* Movie title styling */
+.movie-item h3 {
+    padding: 15px;
+    font-size: 1.1rem;
+    color: #333;
+    margin: 0;
+    text-align: center;
+}

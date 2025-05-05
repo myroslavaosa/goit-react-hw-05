@@ -1,34 +1,25 @@
 import { useEffect, useState } from 'react';
 import { getTrendingMovies } from '../../api/api';
+import MovieList from '../../components/MovieList/MovieList';
 
-export default function HomePage() {
+const HomePage = () => {
   const [movies, setMovies] = useState([]);
 
   useEffect(() => {
-    const fetchTrendingMovies = async () => {
-      try {
-        const data = await getTrendingMovies();
-        setMovies(data.results); // contains the list of movies
-      } catch (error) {
-        console.error('Failed to fetch trending movies:', error);
-      }
+    const fetchMovies = async () => {
+      const response = await getTrendingMovies();
+      setMovies(response.results); 
     };
 
-    fetchTrendingMovies();
+    fetchMovies();
   }, []);
 
   return (
-    <section>
-      <h1>MovieScout</h1>
-      <p>Discover trending movies and find your next favorite.</p>
-
-      <ul>
-        {movies.slice(0, 20).map(movie => (
-          <li key={movie.id}>
-            {movie.title || movie.name}
-          </li>
-        ))}
-      </ul>
-    </section>
+    <div>
+      <h1>Popular Movies</h1>
+      <MovieList movies={movies} />
+    </div>
   );
-}
+};
+
+export default HomePage;

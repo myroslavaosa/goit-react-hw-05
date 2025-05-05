@@ -13,18 +13,16 @@ export const Header = () => {
         <span role="img" aria-label="computer icon">
           💻
         </span>{' '}
-        GoMerch Store
+        Movies
       </p>
 
       <nav className={css.nav}>
         <NavLink to="/" className={buildLinkClass}>
           Home
         </NavLink>
-        <NavLink to="/about" className={buildLinkClass}>
-          About
-        </NavLink>
-        <NavLink to="/products" className={buildLinkClass}>
-          Products
+
+        <NavLink to="/moviespage" className={buildLinkClass}>
+          Movies
         </NavLink>
       </nav>
     </header>
