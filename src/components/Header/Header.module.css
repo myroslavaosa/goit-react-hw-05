@@ -1,13 +1,31 @@
-.header { 
-    position: 'fixed';
-      top: 0;
-      left: 0;
-      right: 0;
-      height: '60px';
-      background-color: '#fff';
-      border-bottom: '1px solid #ccc';
-      z-Index: 1000;
-      display: flex;
-      align-items: center;
-      padding: 0.1rem;
-    }
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 0;
+  margin-bottom: 16px;
+  border-bottom: 1px solid black;
+}
+
+.nav {
+  display: flex;
+}
+
+.logo {
+  font-weight: 700;
+  margin: 0;
+}
+
+.link {
+  padding: 8px 16px;
+  border-radius: 4px;
+  text-decoration: none;
+  color: black;
+  font-weight: 500;
+}
+
+.active {
+  color: white;
+  background-color: orangered;
+}
