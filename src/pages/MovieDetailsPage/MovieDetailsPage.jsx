@@ -1,11 +1,11 @@
 import { Suspense, useState, useEffect } from 'react';
 import { Link, Outlet, useParams } from 'react-router-dom';
-import { getMovieDetails } from '../../api/api'; // Adjust path if needed
+import { getMovieDetails } from '../../api/api';
+import GoBackLink from '../../components/GoBackLink/GoBackLink';
 
-const IMAGE_BASE_URL = 'https://image.tmdb.org/t/p/w500/'; // Base URL for the images
-
+const IMAGE_BASE_URL = 'https://image.tmdb.org/t/p/w500/'; 
 export default function MovieDetailsPage() {
-  const { movieId } = useParams(); // Retrieve movieId from URL
+  const { movieId } = useParams(); 
   const [movie, setMovie] = useState(null);
 
   useEffect(() => {
@@ -15,11 +15,11 @@ export default function MovieDetailsPage() {
       .catch(err => console.error('Error fetching movie details:', err));
   }, [movieId]);
 
-  // If movie data is not available yet, show a loading message
   if (!movie) return <div>Loading...</div>;
 
   return (
     <main className="movie-details">
+      <GoBackLink /> {/* <- This replaces the raw Link */}
       <div className="movie-details-header">
         {/* Movie Poster */}
         <img 

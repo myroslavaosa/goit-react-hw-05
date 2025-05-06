@@ -1,36 +1,45 @@
 // MoviesPage.jsx
-import { Formik, Field, Form } from 'formik';
-import { useState } from 'react';
-import { searchMovies } from '../../api/api'; // Import the new search function
+import { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import { searchMovies } from '../../api/api';
 import MovieList from '../../components/MovieList/MovieList';
 
 const MoviesPage = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const query = searchParams.get('query') || '';
   const [movies, setMovies] = useState([]);
-  const [searched, setSearched] = useState(false); // Track if the user has searched
+  const [searched, setSearched] = useState(false);
 
-  const handleSearch = async (values) => {
-    setSearched(true);  // Set the searched flag to true when search is triggered
-    const response = await searchMovies(values.movie);
-    setMovies(response.results); // Set the search results
+  useEffect(() => {
+    if (!query) return;
+    const fetchMovies = async () => {
+      try {
+        const response = await searchMovies(query);
+        setMovies(response.results || []);
+        setSearched(true);
+      } catch (error) {
+        console.error('Search error:', error);
+      }
+    };
+    fetchMovies();
+  }, [query]);
+
+  const handleSearch = e => {
+    e.preventDefault();
+    const input = e.target.elements.movie.value.trim();
+    if (input) {
+      setSearchParams({ query: input });
+    }
   };
 
   return (
     <div>
       <h1>Search for a Movie</h1>
-      <Formik
-        initialValues={{ movie: '' }}
-        onSubmit={handleSearch}
-      >
-        {() => (
-          <Form>
-            <label htmlFor="movie">Input your movie:</label>
-            <Field id="movie" name="movie" placeholder="Input your movie" />
-            <button type="submit">Search</button>
-          </Form>
-        )}
-      </Formik>
-
-      <MovieList movies={movies} searched={searched} /> {/* Pass searched flag */}
+      <form onSubmit={handleSearch}>
+        <input name="movie" placeholder="Input your movie" defaultValue={query} />
+        <button type="submit">Search</button>
+      </form>
+      <MovieList movies={movies} searched={searched} />
     </div>
   );
 };
