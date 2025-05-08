@@ -1,13 +1,9 @@
-// components/GoBackLink/GoBackLink.jsx
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
-const GoBackLink = () => {
-  const location = useLocation();
-  const backLink = location.state?.from || '/movies';
-
+const GoBackLink = ({ to }) => {
   return (
     <div style={{ marginBottom: '1rem' }}>
-      <Link to={backLink}>← Go back</Link>
+      <Link to={to}>← Go back</Link>
     </div>
   );
 };
